@@ -14,3 +14,12 @@ body{font-family:Arial,'Noto Sans',-apple-system,BlinkMacSystemFont,'Hiragino Ka
 .practice-label{display:block;font-size:19px;font-weight:700;margin:0 0 6px}.practice-select{width:100%;min-height:52px;padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--text);font-size:20px}.hero .practice-label{color:#fff}.hero .practice-select{max-width:440px;background:#fff;color:#25252a;border-color:#fff;margin-bottom:16px}.review-mode{margin-top:20px;max-width:440px}.review-mode .practice-label{color:var(--text)}
 
 .data-credit{border-top:1px solid var(--line);margin-top:35px;padding:20px 0;color:var(--muted);font-size:15px;line-height:1.8}.source-credit{font-size:15px;margin-top:8px;color:var(--muted)}.source-credit a{color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+/* Brand assets are displayed without altering the supplied artwork. */
+.brand{flex-direction:column;align-items:flex-start;gap:12px}
+.brand-logos,.mobile-brand-logos{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.personal-logo{display:block;position:relative;overflow:hidden;width:108px;height:48px;flex:none;border-radius:10px;background:#fff}
+.personal-logo img{position:absolute;width:108px;height:108px;max-width:none;left:0;top:50%;transform:translateY(-50%)}
+.pocket-logo{display:block;width:48px;height:48px;flex:none}
+.mobile-brand-logos{display:none}
+@media(max-width:800px){.mobile-brand-logos{display:flex;gap:7px}.mobile-brand-logos .personal-logo{width:72px;height:36px;border-radius:7px}.mobile-brand-logos .personal-logo img{width:76px;height:76px;left:-2px}.mobile-brand-logos .pocket-logo{width:38px;height:38px}.top-heading{min-width:0}.top-title{white-space:nowrap}}
+@media(max-width:390px){.topbar{padding-left:12px;padding-right:12px}.mobile-brand-logos .personal-logo{width:58px;height:32px}.mobile-brand-logos .personal-logo img{width:62px;height:62px}.mobile-brand-logos .pocket-logo{width:34px;height:34px}.top-heading{gap:7px}.top-title{font-size:24px}.top-actions{gap:6px}.top-actions .icon-btn{width:40px;height:40px}}

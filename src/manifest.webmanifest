@@ -1,1 +1,1 @@
-{"name":"日本語 Pocket","short_name":"日本語 Pocket","description":"日本語のインプットとアウトプット練習","start_url":"./","scope":"./","display":"standalone","background_color":"#f6f5f3","theme_color":"#bd424b","icons":[{"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}]}
+{"name":"日本語 Pocket","short_name":"日本語 Pocket","description":"日本語のインプットとアウトプット練習","start_url":"./","scope":"./","display":"standalone","background_color":"#f6f5f3","theme_color":"#bd424b","icons":[{"src":"./icon.svg?v=2.1","sizes":"any","type":"image/svg+xml","purpose":"any"}]}
