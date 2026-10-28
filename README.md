@@ -39,8 +39,14 @@ word,kana,meaning,level,example_ja,example_en
 
 ## 公開版と出典
 
-公開版は、imiwa? 由来の例文のうち、日本語と英語訳を Tatoeba の公式データに照合できたものだけを収録しています。語彙 11,141 件、例文 16,156 件、文法表現 17 件です。日英それぞれの投稿者と原文ページへのリンクを保持しています。
+公開版は、imiwa? 由来の例文のうち、日本語と英語訳を Tatoeba の公式データに照合できたものだけを収録しています。語彙 11,126 件、例文 16,156 件、文法表現 17 件です。日英それぞれの投稿者と原文ページへのリンクを保持しています。
 
 語彙は [JMdict / EDRDG](https://www.edrdg.org/wiki/index.php/JMdict-EDICT_Dictionary_Project) の [CC BY-SA 4.0](https://www.edrdg.org/edrdg/newlic.html)、例文は [Tatoeba](https://tatoeba.org/) の [CC BY 2.0 FR](https://creativecommons.org/licenses/by/2.0/fr/) に基づき、選択・構造を変更しています。照合に使用した公開データと再生成方法は `datasets/published/README.md` を参照してください。公開版のデータセットは `npm run build -- --published` でビルドされ、ローカル専用の元データを公開リポジトリに含めません。
 
+公開版の語彙は、imiwa? で選んだ項目を 2026-10-26 の JMdict に照合・更新しています。定期的に [jmdict-simplified の最新リリース](https://github.com/scriptin/jmdict-simplified/releases/latest) の `jmdict-eng-*.json.tgz` を取得し、`python3 scripts/update-public-jmdict.py /path/to/jmdict-eng-VERSION.json.tgz` を実行して更新できます。公開後は少なくとも毎月データを更新してください。
+
 GitHub Pages 版は静的サイトのため、ブラウザの日本語音声を使用します。利用できる場合は Google 日本語音声を優先し、それ以外は端末の日本語音声を使用します。音声の種類と品質はブラウザと端末によって異なります。
+
+## ライセンス
+
+プロジェクトのコードは MIT ライセンスです。辞書・例文データはそれぞれの提供元のライセンスに従います。詳細は [NOTICE.md](NOTICE.md) を参照してください。
