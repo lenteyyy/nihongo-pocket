@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.DS_Store
+
+# Local imiwa-derived snapshot lacks published attribution; keep it local.
+public/data/
