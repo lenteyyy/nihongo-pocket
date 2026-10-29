@@ -25,3 +25,22 @@ body{font-family:Arial,'Noto Sans',-apple-system,BlinkMacSystemFont,'Hiragino Ka
 @media(max-width:390px){.topbar{padding-left:12px;padding-right:12px}.mobile-brand-logos .personal-logo{width:58px;height:32px}.mobile-brand-logos .personal-logo img{width:62px;height:62px}.mobile-brand-logos .pocket-logo{width:34px;height:34px}.top-heading{gap:7px}.top-title{font-size:24px}.top-actions{gap:6px}.top-actions .icon-btn{width:40px;height:40px}}
 
 .home-layout,.practice-layout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start}.home-welcome .progress-line{background:#ffffff55;margin:20px 0}.home-welcome .progress-line span{background:#fff}@media(max-width:800px){.home-layout,.practice-layout{grid-template-columns:1fr}.bottom-nav .nav-button{font-size:13px}}
+
+@media (prefers-reduced-motion: no-preference){
+  button,a{transition:background-color .15s ease,color .15s ease,border-color .15s ease,box-shadow .18s ease,transform .18s ease}
+  button:active:not(:disabled){transform:translateY(1px)}
+  .card,.list-card{transition:border-color .18s ease,box-shadow .18s ease}
+  .progress-line span{transition:width .25s ease-out}
+  .page-enter,.question-enter{animation:pocket-appear .22s ease-out both}
+  .feedback-enter,.modal-enter{animation:pocket-appear .15s ease-out both}
+  @keyframes pocket-appear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* A restrained surface system with clear hierarchy and responsive controls. */
+:root{--bg:#f6f7f9;--panel:#fff;--line:#e4e8ee;--soft:#fbebeb;--shadow:0 8px 28px rgba(31,43,59,.035)}
+.sidebar{padding-top:32px}.nav{gap:7px}.nav-button{border-radius:13px}.nav-button:not(.active):hover{background:var(--field);color:var(--text)}
+.topbar{background:var(--panel)}.content{padding-top:42px}.card,.list-card{border-radius:20px;box-shadow:var(--shadow)}.home-layout,.practice-layout{gap:24px}.home-welcome{min-height:250px;display:flex;flex-direction:column;justify-content:center}.home-welcome h2{margin-top:0}.home-welcome .progress-line{max-width:330px}.daily-word{min-height:250px}.hero{background:var(--red)}
+.quick{border-radius:15px}.button{letter-spacing:.01em}.button.secondary:hover,.icon-btn:hover,.speech:hover{background:var(--soft);border-color:#e8c3c5}.button.light:hover{background:#fff6f6}.quick:hover,.list-card:hover{box-shadow:0 8px 24px rgba(31,43,59,.055)}.answer-option{border-radius:14px}.answer-option:hover{background:var(--soft)}.training-card{padding:36px}.training-card h2{margin-top:24px}.question-meaning,.question-text{margin:30px 0}.answer-box{border-radius:15px}.data-credit{margin-top:48px}
+[data-theme=dark]{--bg:#101925;--panel:#192331;--line:#2d3948;--soft:#382b31;--shadow:none}
+@media(max-width:800px){.content{padding-top:26px}.home-layout,.practice-layout{gap:16px}.home-welcome,.daily-word{min-height:0}.training-card{padding:24px}.bottom-nav .nav-button{min-width:0;font-size:12px}.bottom-nav .nav-button span{white-space:nowrap}}
