@@ -22,3 +22,20 @@ export function makePlan({words,sentences,grammar,reviews={},count=40,day=dayKey
 }
 export function parseCSV(text){text=text.replace(/^\uFEFF/,'');let rows=[],row=[],field='',quote=false;for(let i=0;i<text.length;i++){const c=text[i];if(quote){if(c==='"'&&text[i+1]==='"'){field+='"';i++}else if(c==='"')quote=false;else field+=c}else if(c==='"')quote=true;else if(c===','){row.push(field);field=''}else if(c==='\n'||c==='\r'){if(c==='\r'&&text[i+1]==='\n')i++;row.push(field);if(row.some(x=>x.trim()))rows.push(row);row=[];field=''}else field+=c}if(quote)throw new Error('CSV の引用符が閉じられていません');if(field||row.length){row.push(field);rows.push(row)}if(!rows.length)return [];const headers=rows.shift().map(x=>x.trim().toLowerCase());return rows.map(values=>Object.fromEntries(headers.map((h,i)=>[h,(values[i]||'').trim()]))) }
 export function diff(expected,actual){const a=Array.from(expected),b=Array.from(actual);if(a.length*b.length>40000)return [{type:'same',text:actual}];const dp=Array.from({length:a.length+1},()=>new Uint16Array(b.length+1));for(let i=a.length-1;i>=0;i--)for(let j=b.length-1;j>=0;j--)dp[i][j]=a[i]===b[j]?dp[i+1][j+1]+1:Math.max(dp[i+1][j],dp[i][j+1]);let i=0,j=0,out=[];function add(type,char){if(out.length&&out.at(-1).type===type)out.at(-1).text+=char;else out.push({type,text:char})}while(i<a.length||j<b.length){if(i<a.length&&j<b.length&&a[i]===b[j]){add('same',a[i]);i++;j++}else if(j<b.length&&(i===a.length||dp[i][j+1]>=dp[i+1][j]))add('extra',b[j++]);else add('missing',a[i++])}return out}
+
+// Align kana anchors before attaching readings to kanji groups.
+export function furiganaParts(text,reading){
+ const chunks=String(text||'').match(/[\u3400-\u9fff々〆ヶ0-9０-９]+|[^\u3400-\u9fff々〆ヶ0-9０-９]+/gu)||[];
+ if(!/[\u3400-\u9fff々〆ヶ]/u.test(text||''))return [[text,'']];
+ const hira=s=>s.normalize('NFKC').replace(/[ァ-ヶ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x60));
+ const value=hira(String(reading||''));if(!value)return null;
+ const results=[];
+ function walk(i,pos,parts){
+  if(results.length>1)return;
+  if(i===chunks.length){if(pos===value.length)results.push(parts);return}
+  const chunk=chunks[i];
+  if(/[\u3400-\u9fff々〆ヶ]/u.test(chunk)){for(let end=pos+1;end<=value.length;end++)walk(i+1,end,[...parts,[chunk,value.slice(pos,end)]]);}
+  else {const plain=hira(chunk);if(value.startsWith(plain,pos))walk(i+1,pos+plain.length,[...parts,[chunk,'']]);}
+ }
+ walk(0,0,[]);return results.length===1?results[0]:null;
+}
