@@ -24,6 +24,8 @@ Google 音声はローカルサーバーの `/api/tts` が必要で、インタ�
 
 ## 自分の資料を追加
 
+imiwa? のお気に入り専用 JSON は「設定」→「語彙・お気に入りをインポート」から読み込めます。お気に入りと学習記録はブラウザ内に保存され、公開リポジトリには送信されません。
+
 設定から CSV、JSON、TXT、Markdown をインポートできます。CSV は UTF-8 で、例：
 
 ```csv
@@ -39,7 +41,7 @@ word,kana,meaning,level,example_ja,example_en
 
 ## 公開版と出典
 
-公開版は、imiwa? 由来の例文のうち、日本語と英語訳を Tatoeba の公式データに照合できたものだけを収録しています。語彙 11,126 件、例文 16,156 件、文法表現 17 件です。日英それぞれの投稿者と原文ページへのリンクを保持しています。
+公開版は、日本語と英語訳を Tatoeba の公式データに照合した例文を収録しています。語彙 10,424 件、例文 15,691 件です。例文は 45 文字以内に絞り、形態素の読みから振り仮名を生成しています。機械的な長さによる絞り込みであり、JLPT の難易度や読みの正確さを保証するものではありません。日英それぞれの投稿者と原文ページへのリンクを保持しています。
 
 語彙は [JMdict / EDRDG](https://www.edrdg.org/wiki/index.php/JMdict-EDICT_Dictionary_Project) の [CC BY-SA 4.0](https://www.edrdg.org/edrdg/newlic.html)、例文は [Tatoeba](https://tatoeba.org/) の [CC BY 2.0 FR](https://creativecommons.org/licenses/by/2.0/fr/) に基づき、選択・構造を変更しています。照合に使用した公開データと再生成方法は `datasets/published/README.md` を参照してください。公開版のデータセットは `npm run build -- --published` でビルドされ、ローカル専用の元データを公開リポジトリに含めません。
 
