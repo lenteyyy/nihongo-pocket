@@ -10,14 +10,24 @@ export function makePlan({words,sentences,grammar,reviews={},count=40,day=dayKey
  const type=direct[mode]||practiceType;if(!PRACTICE_TYPES.includes(type))return [];
  const seed=seedForDay(day+mode+type),sentenceMap=new Map(sentences.map(s=>[s.id,s]));
  const eligible=words.filter(w=>w.meaning?.eng?.length&&sentenceMap.has(w.exampleId)&&(!['translation','translation_reverse'].includes(type)||sentenceMap.get(w.exampleId).translations?.eng?.length));
- const ordered=(items)=>{const due=items.filter(w=>reviews[w.id]?.due&&reviews[w.id].due<=day),fresh=items.filter(w=>!reviews[w.id]),later=items.filter(w=>reviews[w.id]?.due>day);return mode==='review'?shuffled(due,seed):[...shuffled(due,seed),...shuffled(fresh,seed+1),...shuffled(later,seed+2)]};
+ const ordered=(items)=>{
+  const due=shuffled(items.filter(w=>reviews[w.id]?.due&&reviews[w.id].due<=day),seed);
+  if(mode==='review')return due;
+  const fresh=shuffled(items.filter(w=>!reviews[w.id]),seed+1);
+  const later=shuffled(items.filter(w=>reviews[w.id]&&!(reviews[w.id]?.due&&reviews[w.id].due<=day)),seed+2);
+  if(mode!=='today')return [...due,...fresh,...later];
+  const learned=[...due,...later];
+  const total=Math.min(count,items.length,Math.floor(fresh.length/0.7));
+  const reviewCount=Math.min(learned.length,Math.floor(total*0.3));
+  return [...learned.slice(0,reviewCount),...fresh.slice(0,total-reviewCount)];
+ };
  if(type==='grammar'){
   const choices=ordered(grammar.filter(g=>g.exampleIds?.some(id=>sentenceMap.has(id))));
   if(!choices.length||!eligible.length)return [];
-  const n=mode==='review'?Math.min(count,choices.length):count;
+  const n=['review','today'].includes(mode)?Math.min(count,choices.length):count;
   return Array.from({length:n},(_,i)=>{const g=choices[i%choices.length],examples=g.exampleIds.filter(id=>sentenceMap.has(id));return {wordId:eligible[i%eligible.length].id,type,grammarId:g.id,exampleId:examples[Math.floor(i/choices.length)%examples.length]}});
  }
- const pool=ordered(eligible);if(!pool.length)return [];const n=mode==='review'?Math.min(count,pool.length):count;
+ const pool=ordered(eligible);if(!pool.length)return [];const n=['review','today'].includes(mode)?Math.min(count,pool.length):count;
  return Array.from({length:n},(_,i)=>({wordId:pool[i%pool.length].id,type,grammarId:null,exampleId:pool[i%pool.length].exampleId}));
 }
 export function parseCSV(text){text=text.replace(/^\uFEFF/,'');let rows=[],row=[],field='',quote=false;for(let i=0;i<text.length;i++){const c=text[i];if(quote){if(c==='"'&&text[i+1]==='"'){field+='"';i++}else if(c==='"')quote=false;else field+=c}else if(c==='"')quote=true;else if(c===','){row.push(field);field=''}else if(c==='\n'||c==='\r'){if(c==='\r'&&text[i+1]==='\n')i++;row.push(field);if(row.some(x=>x.trim()))rows.push(row);row=[];field=''}else field+=c}if(quote)throw new Error('CSV の引用符が閉じられていません');if(field||row.length){row.push(field);rows.push(row)}if(!rows.length)return [];const headers=rows.shift().map(x=>x.trim().toLowerCase());return rows.map(values=>Object.fromEntries(headers.map((h,i)=>[h,(values[i]||'').trim()]))) }
